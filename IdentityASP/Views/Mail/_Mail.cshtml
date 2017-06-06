@@ -1,0 +1,31 @@
+﻿@model IdentityASP.Models.ViewModel.MailViewModel 
+
+@using (Ajax.BeginForm("SendMail", "Mail", null, new AjaxOptions() { OnSuccess = "showMailSuccessAlert" }))
+{
+    <div class="form-group">
+        <label for="mailFromLabel">From</label>
+        @Html.TextBoxFor(m => m.MailFrom, new { @class = "form-control input-sm", id = "mailfrom", name = "mailfrom", required = "required", autocomplete = "off" })
+    </div>
+        <div class="form-group">
+            <label for="mailToLabel">To</label>
+            @Html.TextBoxFor(m => m.MailTo, new { @class = "form-control input-sm", id = "mailto", name = "mailto", required = "required", autocomplete = "off" })
+        </div>
+        <div class="form-group">
+            <label for="mailSubjectLabel">Subject</label>
+            @Html.TextBoxFor(m => m.MailSubject, new { @class = "form-control input-sm", id = "mailsubject", name = "mailsubject", required = "required", autocomplete = "off" })
+        </div>
+        <div class="form-group">
+            <label for="mailBodyLabel">Body</label>
+            @Html.TextBoxFor(m => m.MailBody, new { @class = "form-control input-sm", id = "mailbody", name = "mailbody", required = "required", autocomplete = "off" })
+        </div>
+        <div class="form-group">
+            <label for="mailMessageLabel">Message</label>
+            @Html.TextBoxFor(m => m.MailMessage, new { @class = "form-control input-sm", id = "mailmessage", name = "mailmessage", required = "required", autocomplete = "off" })
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn-save btn btn-default" value="Save">Send</button>
+            <button type="button" class="btn-cancel btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+}
+

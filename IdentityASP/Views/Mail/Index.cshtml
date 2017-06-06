@@ -1,0 +1,17 @@
+﻿@model IdentityASP.Models.ViewModel.MailViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mail</h2>
+
+<html>
+<head>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-unobstrusive-ajax")
+</head>
+<body>
+    <div>@Html.Partial("~/Views/Mail/_Mail.cshtml")</div>
+</body>
+</html>
+

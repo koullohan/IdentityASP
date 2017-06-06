@@ -1,0 +1,35 @@
+﻿@*@model IdentityASP.Models.ViewModel.ManufacturerViewModel*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dashboard</h2>
+
+<html>
+<head>    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-unobstrusive-ajax")
+</head>
+<body>
+    
+    <div>@Html.Partial("~/Views/Sales/_Sales.cshtml")</div>
+    <div>@Html.Partial("~/Views/Document/_Upload.cshtml")</div>
+</body>
+</html>
+
+
+@*<script>
+    function showSales(e)
+    {
+        if (e.success) {
+            $.each(e.data, function (i) {
+                    alert(e.data[i].SalesYear);
+                    alert(e.data[i].SalesAmount);
+                    alert(e.data[i].SalesName);
+            });
+        }
+    }
+</script>*@
+
+    
+

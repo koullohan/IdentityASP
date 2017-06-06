@@ -1,0 +1,42 @@
+﻿@model IdentityASP.Models.ViewModel.ProductViewModel
+
+<div class="container">
+    <table id="product-table" class="table">
+        <thead>
+            <tr>
+                <th>Product Id</th>
+                <th>CategoryId</th>
+                <th>Category</th>
+                <th>ManufacturerId</th>
+                <th>ManufacturerName</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Model</th>
+                <th>Released Date</th>
+                <th>Released Year</th>
+                <th>Action</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ProductList)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.CategoryId</td>
+                    <td>@item.CategoryDescription</td>
+                    <td>@item.ManufacturerId</td>
+                    <td>@item.ManufacturerName</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Model</td>
+                    <td>@item.ReleasedDate</td>
+                    <td>@item.ReleasedYear</td>
+                    <td><button type="button" data-toggle="modal" href="@Url.Action("EditProduct", "Product",new { id = item.Id })" data-target="#AddProductModal" class="btn-edit btn btn-info btn-default">Edit</button></td>
+                    <td><button type="button" class="btn-delete btn btn-info btn-default">Delete</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

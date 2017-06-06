@@ -1,0 +1,361 @@
+﻿@model Entities.Category
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Categories</h2>
+
+<html>
+<head>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-unobstrusive-ajax")    
+</head>
+<body>
+    
+    <!-- #begin categorymodalbutton-->  
+    <div id="AddCategory"> <button type="button" data-toggle="modal" href="@Url.Action("AddCategory", "Category")" data-target="#AddCategoryModal" class="btn-add btn btn-info btn-default">Add</button></div> 
+    <!--#end categorymodalbutton -->
+                          
+    <!--#begin collapsibletable-->       
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">       
+        <!--category-->
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Categories
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div class="container">
+                        <table id="category-table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Category Id</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>      
+                                @foreach (var item in Model.CategoryList)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Description</td>
+                                        <td><button type="button" data-toggle="modal" href="@Url.Action("EditCategory", "Category",new {id = item.Id })" data-target="#AddCategoryModal" class="btn-edit btn btn-info btn-default">Edit</button></td>
+                                        <td><button type="button" class="btn-delete btn btn-info btn-default">Delete</button></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>         
+        <!--category-->  
+               
+        <!--categorysub-->            
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" id="categorySubCollapse" role="button" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Categories Sub
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="container">
+                        <table id="categorysub-table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>CategorySub Id</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--categorysub-->                    
+    </div>
+    <!--#end collapsibletable-->
+    
+    <!-- #begin categorysubmodalbutton-->   
+    <div id="AddCategorySub"><button type="button" data-toggle="modal" href="@Url.Action("AddCategorySub", "CategorySub",new { categoryId = "id"})" data-target="#AddCategorySubModal" class="btn-addsub btn btn-info btn-default">Add</button></div>
+    <!--#end categorysubmodalbutton -->
+
+
+    <!--#begin categorymodal-->
+    <div id="AddCategoryModal" class="modal fade" role="dialog"></div>
+    <!--#end categorymodal-->
+    <!--#begin categorysubmodal-->
+    <div id="AddCategorySubModal" class="modal fade" role="dialog"></div>
+    <!--#end categorysubmodal-->
+
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+
+    var dataTableCategory;
+    var dataTableCategorySub;
+
+    $(document).ready(function () {
+
+        dataTableCategory = $('#category-table').DataTable({
+
+            "lengthMenu": [[5,10, 25, 50, -1], [5,10, 25, 50, "All"]],
+            stateSave: true
+        });
+
+        $('#category-table tbody, .btn-edit').on('click', 'tr', function () {
+            dataTableCategory.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        });
+
+        $("#AddCategoryModal").on('hidden.bs.modal', function () {
+            $(this).data('bs.modal', null);
+        });
+
+
+        dataTableCategorySub = $('#categorysub-table').DataTable({
+
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            stateSave: true
+        });
+
+        $('#categorysub-table tbody, .btn-editsub').on('click', 'tr', function () {
+            dataTableCategorySub.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        });
+
+        $("#AddCategorySubModal").on('hidden.bs.modal', function () {
+            $(this).data('bs.modal', null);
+        });
+
+        hideButtonAddSub();
+
+    });
+
+    function clearTable() {
+
+
+    }
+
+    function clearTableSub() {
+
+        dataTableCategorySub.clear().draw();
+
+    }
+
+    function hideCollapsible(collapseNumber, visible) {
+
+        if (collapseNumber == '2' && visible == true) {
+            $('#collapseTwo').addClass('panel-collapse in');
+        }
+        else if (collapseNumber == '2' && visible == false) {
+            $('#collapseTwo').removeClass('panel-collapse in');
+            $('#collapseTwo').addClass('panel-collapse collapse');
+        }
+
+    }
+
+    function hideButtonAddSub() {
+
+        $(".btn-addsub").hide();
+
+    }
+
+    function hideModal() {
+
+        $('#AddCategoryModal').modal('hide').data('bs.modal', null);
+
+    }
+
+    function hideModalSub() {
+
+        $('#AddCategorySubModal').modal('hide').data('bs.modal', null);
+
+    }
+
+    function showButtonAddSub(categoryId) {
+
+        $(".btn-addsub").show();
+
+        var url = "@Html.Raw(@Url.Action("AddCategorySub", "CategorySub", new { categorysubId = "id", categoryId = "id2"}))";
+        url = url.replace('id', '0');
+        url = url.replace('id2', categoryId);
+
+        $('.btn-addsub').attr('href', url);
+
+    }
+
+    function updateTableCategory(e) {
+
+        var arr = null;
+        var new_record = null;
+        if (e.success) {
+
+            arr = $.map(e.data, function (value, index) { return [value]; });
+            var url = "@Html.Raw(@Url.Action("EditCategory", "Category", new { id = "category" }))";
+            url = url.replace('category', arr[0]);
+
+            new_record = [arr[0], arr[1],
+            '<button type="button" data-toggle="modal" href=' + url + ' data-target="#AddCategoryModal" class="btn-edit btn btn-info btn-default">Edit</button>',
+            '<button type="button" class="btn-delete btn btn-info btn-default">Delete</button>'];
+
+            if (e.success == "TrueAdd") {
+                dataTableCategory.row.add(new_record).draw(false);
+
+            }
+            else if (e.success == "TrueEdit") {
+                dataTableCategory.row('.selected').data(new_record).draw(false);
+
+            }
+        }
+        else if (!e.success) {
+            $('.modal-body').find('input').each(function () {
+                if (!$(this).prop('required')) { }
+                else { }
+            });
+        }
+
+        hideModal();
+
+    }
+
+    function updateTableCategorySub(e) {
+
+        var arr = null;
+        var new_record = null;
+        if (e.success) {
+
+            arr = $.map(e.data, function (value, index) { return [value]; });
+            var url = "@Html.Raw(@Url.Action("EditCategorySub", "CategorySub", new {categorysubId = "id", categoryId = "id2" }))";
+            url = url.replace('id', arr[0]);
+            url = url.replace('id2', e.data.CategoryId);
+
+            new_record = [arr[0], arr[1],
+            '<button type="button" data-toggle="modal" href=' + url + ' data-target="#AddCategorySubModal" class="btn-editsub btn btn-info btn-default">Edit</button>',
+            '<button type="button" class="btn-deletesub btn btn-info btn-default">Delete</button>'];
+
+            if (e.success == "TrueAdd") {
+                dataTableCategorySub.row.add(new_record).draw(false);
+
+            }
+            else if (e.success == "TrueEdit") {
+                dataTableCategorySub.row('.selected').data(new_record).draw(false);
+
+            }
+        }
+        else if (!e.success) {
+            $('.modal-body').find('input').each(function () {
+                if (!$(this).prop('required')) { }
+                else { }
+            });
+        }
+
+        hideModalSub();
+
+    }
+
+    $(document).on('click', '.btn-delete', function () {                                  //  delete, open dialog box , get category id,  use jquery ajax to delete record, update table on success.
+     
+        var categoryId = $(this).closest('tr').children('td:eq(0)').text();
+        if (categoryId != 0) {
+
+            bootbox.confirm("Delete this record ?, sub categories will also be deleted. ", function (confirmed) {
+                if (confirmed == true) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Category/Delete',
+                        data: { categoryId: categoryId },
+                        success: function (e) {
+                            if (e.success) {
+                                dataTableCategory.row('.selected').remove().draw(false);
+                                clearTableSub();
+                                hideButtonAddSub();
+                                hideCollapsible('2', false);
+                            }
+                        }
+                    });
+                } 
+            });
+        }
+
+    });
+
+    $(document).on('click', '.btn-deletesub', function () {                                  //  delete, open dialog box , get categorysub id,  use jquery ajax to delete record, update table on success.
+
+        var categorysubId = $(this).closest('tr').children('td:eq(0)').text();
+        if (categorysubId != 0) {
+
+            bootbox.confirm("Delete this record ?", function (confirmed) {
+                if (confirmed == true) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/CategorySub/Delete',
+                        data: { categorysubId: categorysubId },
+                        success: function (e) {
+                            if (e.success) {
+                                dataTableCategorySub.row('.selected').remove().draw(false);                               
+                                hideButtonAddSub();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+    });
+
+    $('#category-table tbody').on('click', 'tr', function (e) {
+
+        var categoryId = $(this).closest('tr').children('td:eq(0)').text();
+        clearTableSub();
+        hideCollapsible('2', true);
+        showButtonAddSub(categoryId);
+
+        $.ajax({
+            type: 'POST',
+            url: '/CategorySub/GetCategoriesSub',
+            data: { categoryId: categoryId },
+            success: function (response) {
+                if (response.success) {
+                    $.each(response.data, function (key, value) {
+
+                        var url = "@Html.Raw(@Url.Action("EditCategorySub", "CategorySub", new { categorysubId = "id", categoryId = "id2"}))"
+                        url = url.replace("id", value.Id);
+                        url = url.replace("id2", categoryId);
+                        var categoriesSub = [value.Id, value.Description,
+                            '<button type="button" data-toggle="modal" href=' + url + ' data-target="#AddCategorySubModal" class="btn-editsub btn btn-info btn-default">Edit</button>',
+                            '<button type="button" class="btn-deletesub btn btn-info btn-default">Delete</button>'
+                        ];
+                        dataTableCategorySub.row.add(categoriesSub).draw(false);
+
+                    });
+                }
+            }
+        });
+
+    });
+
+</script>
+

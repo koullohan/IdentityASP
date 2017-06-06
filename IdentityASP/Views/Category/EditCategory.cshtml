@@ -1,0 +1,29 @@
+﻿@model Entities.Category
+<!-- #begin add category modal -->
+@using (Ajax.BeginForm("SaveCategory", "Category", null, new AjaxOptions() { OnSuccess = "updateTableCategory" }, null))
+{
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Category</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>All fields are required</label>
+                    <label for="categoryIdLabel" class="hidden">Category Id</label>
+                    @Html.HiddenFor(m => m.Id, new { @class = "form-control input-sm", id = "categoryId", name = "category-id" })
+                </div>
+                <div class="form-group">
+                    <label for="descriptionLabel">Description</label>
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control input-sm", id = "description", name = "description", required = "required", autocomplete = "off", autofocus = "True" })
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-save btn btn-default" value="Save">Save</button>
+                    <button type="button" class="btn-cancel btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!-- #end add category modal -->

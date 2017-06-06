@@ -1,0 +1,231 @@
+﻿@model IdentityASP.Models.ViewModel.ManufacturerViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Manufacturers</h2>
+
+<html>
+<head>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-unobstrusive-ajax")
+</head>
+<body>
+    
+    <!-- #begin open modal button -->
+    <div><button type="button" class="btn-add btn btn-info btn-default">Add</button></div>
+    <!--#end open modal button-->
+    <!--#begin manufacturer table-->
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Manufacturers
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div class="container">
+                        <table id="manufacturer-table" class="table">
+                            <thead>
+                                <tr>
+                                    <th>ManufacturerId</th>
+                                    <th>Name</th>
+                                    <th>Location</th>
+                                    <th>Manager</th>
+                                    <th>Telephone</th>
+                                    <th>Fax</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Action</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ManufacturerList)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.Location</td>
+                                        <td>@item.Manager</td>
+                                        <td>@item.Telephone</td>
+                                        <td>@item.Fax</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Mobile</td>
+                                        <td><button type="button" class="btn-edit btn btn-info btn-default">Edit</button></td>
+                                        <td><button type="button" class="btn-delete btn btn-info btn-default">Delete</button></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--#end manufacturer table-->
+    <!-- #begin add manufacturer modal -->
+    @using (Ajax.BeginForm("Create", "Manufacturer", null, new AjaxOptions() { OnSuccess = "updateManufacturerTable" }, null))
+    {
+
+        <div id="AddManufacturerModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">New Manufacturer</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>All fields are required</label>
+                            <label for="manufacturerIdLabel" class="hidden">Manufacturer Id</label>
+                            @Html.HiddenFor(m => m.Id, new { @class = "form-control input-sm", id = "manufacturerId", name = "manufacturer-id" })
+                        </div>
+                        <div class="form-group">
+                            <label for="nameLabel">Name</label>
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control input-sm", id = "name", name = "name", required = "required", autocomplete = "off" })
+                        </div>
+                        <div class="form-group">
+                            <label for="locationLabel">Location</label>
+                            @Html.TextBoxFor(m => m.Location, new { @class = "form-control input-sm", id = "location", name = "location", required = "required", autocomplete = "off" })
+                        </div>
+                        <div class="form-group">
+                            <label for="managerLabel">Manager</label>
+                            @Html.TextBoxFor(m => m.Manager, new { @class = "form-control input-sm", id = "manager", name = "manager", required = "required", autocomplete = "off" })
+                        </div>
+                        <div class="form-group">
+                            <label for="telephoneLabel">Telephone</label>
+                            @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control input-sm", id = "telephone", name = "telephone", required = "required", autocomplete = "off" })
+                        </div>
+                        <div class="form-group">
+                            <label for="faxLabel">Fax</label>
+                            @Html.TextBoxFor(m => m.Fax, new { @class = "form-control input-sm", id = "fax", name = "fax", required = "required", autocomplete = "off" })
+                        </div>
+                        <div class="form-group">
+                            <label for="emailLabel">Email</label>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-sm", id = "email", name = "email", required = "required", autocomplete = "off" })
+                        </div>
+                        <div class="form-group">
+                            <label for="mobileLabel">Mobile</label>
+                            @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control input-sm", id = "mobile", name = "mobile", required = "required", autocomplete = "off" })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn-save btn btn-default" value="Save">Save</button>
+                            <button type="button" class="btn-cancel btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    <!-- #end add manufacturer modal -->
+</body>
+</html>
+
+
+<!-- #begin script -->
+<script type="text/javascript">
+
+    var dataTable;
+    $(document).ready(function () {                                                     //  prepares datatable, highlight row selection , modal clear inputs on close.
+
+        dataTable = $('#manufacturer-table').DataTable({
+            stateSave: true
+        });
+
+        $('#manufacturer-table tbody, .btn-edit, .btn-delete').on('click', 'tr', function () {
+            dataTable.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        });
+
+        $('#AddManufacturerModal').on('hidden.bs.modal', function () {
+            clearInputs();
+        });
+
+    });
+
+    function showModal() {
+        $('#AddManufacturerModal').modal('show');                                            //  called function show modal.
+    }
+
+    function hideModal() {
+        $('#AddManufacturerModal').modal('hide');                                            //  called function hide modal.
+    }
+
+    function clearInputs() {                                                                 //  called function clear inputs , set productId to zero.
+        $('.modal-body').find('input').val('');
+        $('#manufacturerId').val('0');
+    }
+
+    function updateManufacturerTable(e) {                                               //  called function on ajax.beginform success
+                                                                                        //  set e.data to array
+                                                                                        //  if true updates table after add or edit, use row.add(array) or row().data(array) respectively.
+                                                                                        //  if false, validates input and show validation messages on each input box.
+        var arr = null;
+        var new_record = null;
+        if (e.success) {
+                arr = $.map(e.data, function (value, index) { return [value]; });
+                new_record = [arr[0],arr[1], arr[2],arr[3],arr[4],arr[5],arr[6],arr[7],
+                    '<button type="button" class="btn-edit btn btn-info btn-default">Edit</button>',
+                    '<button type="button" class="btn-delete btn btn-info btn-default">Delete</button>'];
+
+            if (e.success == "TrueAdd") {
+                dataTable.row.add(new_record).draw(false);
+            }
+            else if (e.success == "TrueEdit") {
+                dataTable.row('.selected').data(new_record).draw(false);
+            }
+        }
+        else if (!e.success) {
+            $('.modal-body').find('input').each(function ()
+            {
+                if (!$(this).prop('required')) {}
+                else {}
+            });
+        }
+        clearInputs();
+        hideModal();
+
+    }
+
+    $(document).on('click', '.btn-add', function () {                                    //  add, open modal, use ajax beginform to add record.
+        showModal();
+    });
+
+    $(document).on('click','.btn-edit', function () {                                    //  edit, open modal , passed table data to each modal input, uses ajax beginform to update record.
+        showModal();
+        $('#manufacturerId').val($(this).closest('tr').children('td:eq(0)').text());
+        $('#name').val($(this).closest('tr').children('td:eq(1)').text());
+        $('#location').val($(this).closest('tr').children('td:eq(2)').text());
+        $('#manager').val($(this).closest('tr').children('td:eq(3)').text());
+        $('#telephone').val($(this).closest('tr').children('td:eq(4)').text());
+        $('#fax').val($(this).closest('tr').children('td:eq(5)').text());
+        $('#email').val($(this).closest('tr').children('td:eq(6)').text());
+        $('#mobile').val($(this).closest('tr').children('td:eq(7)').text());
+    });
+
+    $(document).on('click', '.btn-delete', function () {                                  //  delete, open dialog box , get selected row data,  use jquery ajax to delete record, update table on success.
+        var manufacturerId = $(this).closest('tr').children('td:eq(0)').text();
+        if (manufacturerId != 0) {
+            if (confirm("Delete this record?")) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Manufacturer/Delete',
+                    data: { manufacturerId: manufacturerId },
+                    success: function (e) {
+                        if (e.success) {
+                            dataTable.row('.selected').remove().draw(false);
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+
+</script>
+<!-- #end script -->

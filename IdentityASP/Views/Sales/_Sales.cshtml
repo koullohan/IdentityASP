@@ -1,0 +1,9 @@
+﻿@model IdentityASP.Models.ViewModel.SalesViewModel
+
+@using (Ajax.BeginForm("GetSales", "Sales", null, new AjaxOptions() { OnSuccess = "showSales" }))
+{
+    @Html.TextBoxFor(x => x.SalesYear, new { @class = "form-control input-sm", id = "name", name = "name", required = "required", autocomplete = "off", autofocus = "True" })
+    <input type="submit" value="Submit" />
+}
+
+
