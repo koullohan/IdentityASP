@@ -33,7 +33,13 @@ namespace IdentityASP.Models.ViewModel
         public string ReleasedDate { get; set; }
 
         public string ReleasedYear { get; set; }
-           
+
+        [DataType(DataType.Date)]
+        public DateTime SearchProductFrom { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime SearchProductTo { get; set; }
+       
         public List<ProductViewModel> ProductList { get; set; }
 
         public List<SelectListItem> ManufacturerSelectList { get; set; }

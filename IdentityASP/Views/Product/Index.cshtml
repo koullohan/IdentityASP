@@ -13,62 +13,116 @@
      @Scripts.Render("~/bundles/jquery-unobstrusive-ajax")
 </head>
 <body>
-    
+
+    @using (Ajax.BeginForm("SearchProduct", "Product", null, new AjaxOptions() { UpdateTargetId = "searchResults" }, null))
+    {
+    <input type="datetime" name="From" />
+    <input type="datetime" name="To" />
+    <input type="submit" name="submit" value="Submit" />
+    }
+   
     <!-- #begin productmodalbutton-->
-    <div id="AddProduct"> <button type="button" data-toggle="modal" href="@Url.Action("AddProduct", "Product")" data-target="#AddProductModal" class="btn-add btn btn-info btn-default">Add</button></div>
+    <div id="AddProduct"><button type="button" data-toggle="modal" href="@Url.Action("AddProduct", "Product")" data-target="#AddProductModal" class="btn-add btn btn-info btn-default">Add</button></div>
     <!--#end productmodalbutton -->
+    
     <!--#begin product table-->
-    <div>@Html.Partial("~/Views/Product/Product.cshtml")</div>
+    <div id="searchResults">@Html.Partial("~/Views/Product/Product.cshtml")</div>
     <!--#end product table--> 
+
     <!--#begin productmodal-->
     <div id="AddProductModal" class="modal fade" role="dialog"></div>
     <!--#end productmodal-->
+
 
 </body>
 </html>
 <!-- #end html -->
 
-
-
-
-
 <!-- #begin script -->
 <script type="text/javascript">
 
     var dataTable;
-    $(document).ready(function () {                                                     //  prepares datatable, highlight row selection , modal clear inputs on close.
+    //$(document).ready(function () {                                                     //  prepares datatable, highlight row selection , modal clear inputs on close.
 
-            dataTable = $('#product-table').DataTable({
-                stateSave: true,
-                "columnDefs": [
-                {
-                    className: "hide_column", "targets": [1],
-                }
-                ,
-               {
-                   className: "hide_column", "targets": [3]
-               }]
-       });
-
-
-       $('#product-table tbody, .btn-edit, .btn-delete').on('click', 'tr', function () {
-            dataTable.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        });
+    //        dataTable = $('#product-table').DataTable({
+    //            stateSave: true,
+    //            "columnDefs": [
+    //            {
+    //                className: "hide_column", "targets": [1],
+    //            }
+    //            ,
+    //           {
+    //               className: "hide_column", "targets": [3]
+    //           }]
+    //   });
 
 
-       $("#AddProductModal").on('hidden.bs.modal', function () {
-            $(this).data('bs.modal', null);
-            clearInputs();
-       });
+    //   $('#product-table tbody, .btn-edit, .btn-delete').on('click', 'tr', function () {
+    //        dataTable.$('tr.selected').removeClass('selected');
+    //        $(this).addClass('selected');
+    //    });
 
-       var categoryDescription = $("#categoryId option:selected").text();
-       $("#categoryDescription").val(categoryDescription);
 
-       var manufacturerName = $("#manufacturerId option:selected").text();
-       $("#manufacturerName").val(manufacturerName);
+    //   $("#AddProductModal").on('hidden.bs.modal', function () {
+    //        $(this).data('bs.modal', null);
+    //        clearInputs();
+    //   });
 
-    });
+    //   var categoryDescription = $("#categoryId option:selected").text();
+    //   $("#categoryDescription").val(categoryDescription);
+
+    //   var manufacturerName = $("#manufacturerId option:selected").text();
+    //   $("#manufacturerName").val(manufacturerName);
+
+    //});
+
+    function updateProductTable(e) {                                                    //  called function on ajax.beginform success
+        //  set e.data to array
+        //  if true updates table after add or edit, use row.add(array) or row().data(array) respectively.
+        //  if false, validates input and show validation messages on each input box.
+
+        var arr = null;
+        var new_record = null;
+        if (e.success) {
+
+            if (e.success == "TrueAdd") {
+
+                arr = $.map(e.data, function (value, index) { return [value]; });
+                var url = "@Html.Raw(@Url.Action("EditProduct", "Product", new { id = "product" }))";
+                url = url.replace('product', arr[0]);               
+                new_record = [arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8],arr[9],
+                    '<button type="button" data-toggle="modal" href=' + url + ' data-target="#AddProductModal" class="btn-edit btn btn-info btn-default">Edit</button>',
+                    '<button type="button" class="btn-delete btn btn-info btn-default">Delete</button>'];
+                dataTable.row.add(new_record).draw(false);
+                clearInputs();
+                hideModal();
+
+            }
+            else if (e.success == "TrueEdit") {
+
+                arr = $.map(e.data, function (value, index) { return [value]; });
+                var url = "@Html.Raw(@Url.Action("EditProduct", "Product", new { id = "product" }))";
+                url = url.replace('product', arr[0]);
+                new_record = [arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8],arr[9],
+                    '<button type="button" data-toggle="modal" href=' + url + ' data-target="#AddProductModal" class="btn-edit btn btn-info btn-default">Edit</button>',
+                    '<button type="button" class="btn-delete btn btn-info btn-default">Delete</button>'];
+                dataTable.row('.selected').data(new_record).draw(false);
+                clearInputs();
+                hideModal();
+
+            }
+
+        }
+        else if (!e.success) {
+            $('.modal-body').find('input').each(function ()
+            {
+                if (!$(this).prop('required')) {}
+                else {}
+            });
+        }
+
+    }
+
 
     function hideModal() {
         $('#AddProductModal').modal('hide');                                            //  called function hide modal.
@@ -80,55 +134,6 @@
         $('select#categoryId option:eq(0)').prop('selected', 'selected');
         $('select#manufacturerId option:eq(0)').prop('selected', 'selected');
     }
-
-
-    function updateProductTable(e) {                                                    //  called function on ajax.beginform success
-                                                                                        //  set e.data to array
-                                                                                        //  if true updates table after add or edit, use row.add(array) or row().data(array) respectively.
-                                                                                        //  if false, validates input and show validation messages on each input box.
-        var arr = null;
-        var new_record = null;
-        if (e.success) {
-            arr = $.map(e.data, function (value, index) { return [value]; });
-
-            var url = "@Html.Raw(@Url.Action("EditProduct", "Product", new { id = "product" }))";
-            url = url.replace('product', arr[0]);
-
-                new_record = [arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8],arr[9],
-                    '<button type="button" data-toggle="modal" href=' + url + ' data-target="#AddProductModal" class="btn-edit btn btn-info btn-default">Edit</button>',
-                    '<button type="button" class="btn-delete btn btn-info btn-default">Delete</button>'];
-
-            if (e.success == "TrueAdd") {
-                dataTable.row.add(new_record).draw(false);
-            }
-            else if (e.success == "TrueEdit") {
-                dataTable.row('.selected').data(new_record).draw(false);
-            }
-        }
-        else if (!e.success) {
-            $('.modal-body').find('input').each(function ()
-            {
-                if (!$(this).prop('required')) {}
-                else {}
-            });
-        }
-        clearInputs();
-        hideModal();
-    }
-
-    //$(document).on('click','.btn-edit', function () {                                    //  edit, open modal , passed table data to each modal input, uses ajax beginform to update record.
-    //    showModal();
-    //    $('#productId').val($(this).closest('tr').children('td:eq(0)').text());
-    //    $('#categoryId').val($(this).closest('tr').children('td:eq(1)').text());
-    //    $('#categoryDescription').val($(this).closest('tr').children('td:eq(2)').text());
-    //    $('#manufacturerId').val($(this).closest('tr').children('td:eq(3)').text());
-    //    $('#manufacturerName').val($(this).closest('tr').children('td:eq(4)').text());
-    //    $('#name').val($(this).closest('tr').children('td:eq(5)').text());
-    //    $('#description').val($(this).closest('tr').children('td:eq(6)').text());
-    //    $('#model').val($(this).closest('tr').children('td:eq(7)').text());
-    //    $('#releasedDate').val($(this).closest('tr').children('td:eq(8)').text());
-    //    $('#releasedYear').val($(this).closest('tr').children('td:eq(9)').text());
-    //});
 
     $(document).on('click', '.btn-delete', function () {                                  //  delete, open dialog box , get selected row data,  use jquery ajax to delete record, update table on success.
 

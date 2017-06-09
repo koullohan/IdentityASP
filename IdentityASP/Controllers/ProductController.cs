@@ -35,7 +35,7 @@ namespace IdentityASP.Controllers
                 product.CategoryId = item.CategoryId;
                 product.CategoryDescription = item.CategoryDescription;
                 product.ManufacturerId = item.ManufacturerId;
-                product.ManufacturerName = 
+                product.ManufacturerName = item.ManufacturerName;
                 product.Name = item.Name;
                 product.Description = item.Description;
                 product.Model = item.Model;
@@ -130,6 +130,45 @@ namespace IdentityASP.Controllers
             }
 
             return Json(new { success = result });
+        }
+
+        [HttpPost]
+        public PartialViewResult SearchProduct(FormCollection dateRange)
+        {
+
+            var dateFrom = dateRange["From"];
+            var dateTo = dateRange["To"];
+            var viewmodel = new ProductViewModel();
+            viewmodel.ProductList = new List<ProductViewModel>();
+            if (dateFrom != null && dateTo != null)
+            {
+
+                var productList = ProductBusiness.GetProductsByDateRange(dateFrom, dateTo);
+                if(productList != null)
+                {
+                    foreach (var item in productList)
+                    {
+                        var product = new ProductViewModel();
+                        product.Id = item.Id;
+                        product.CategoryId = item.CategoryId;
+                        product.CategoryDescription = item.CategoryDescription;
+                        product.ManufacturerId = item.ManufacturerId;
+                        product.ManufacturerName = item.ManufacturerName;
+                        product.Name = item.Name;
+                        product.Description = item.Description;
+                        product.Model = item.Model;
+                        product.ReleasedDate = item.ReleasedDate;
+                        product.ReleasedYear = item.ReleasedYear;
+                        viewmodel.ProductList.Add(product);
+
+                    }
+                    result = true;
+                   
+                }
+
+            }
+            return PartialView("Product",viewmodel);
+
         }
 
     }
