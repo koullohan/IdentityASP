@@ -71,10 +71,22 @@
     <Compile Include="Manufacturer.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Document.Designer.cs">
+      <DependentUpon>Document.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Sales.cs" />
+    <Compile Include="VM\DocumentViewModel.cs" />
     <Compile Include="VM\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Document.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Document.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

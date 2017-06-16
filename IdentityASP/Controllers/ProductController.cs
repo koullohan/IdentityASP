@@ -48,28 +48,28 @@ namespace IdentityASP.Controllers
             return View(viewmodel);
         }
 
-        public PartialViewResult AddProduct()
+        public PartialViewResult ShowProductWindow()
         {
 
             ViewBag.Categories = CategoryBusiness.GetCategoriesSelectList();
             ViewBag.Manufacturers = ManufacturerBusiness.GetManufacturersSelectList();
 
-            return PartialView("AddProduct", new Product());
+            return PartialView("_ProductWindow", new Product());
         }
 
-        public PartialViewResult EditProduct(int id)
+        public PartialViewResult GetProduct(int id)
         {
            
             ViewBag.Categories = CategoryBusiness.GetCategoriesSelectList();
             ViewBag.Manufacturers = ManufacturerBusiness.GetManufacturersSelectList();
             var product = ProductBusiness.GetProductByProductId(id);
-            return PartialView("AddProduct", product);
+            return PartialView("_ProductWindow", product);
         }
 
 
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult CreateProduct(Product product)
         {
 
             if (ModelState.IsValid)

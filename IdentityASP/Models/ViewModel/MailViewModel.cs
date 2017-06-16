@@ -15,6 +15,8 @@ namespace IdentityASP.Models.ViewModel
 
         public string MailFrom { get; set; }
 
+        public string MailName { get; set; }
+
         public string MailMessage { get; set; }
 
         public string MailSubject { get; set; }

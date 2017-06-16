@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="CategoryBusiness.cs" />
     <Compile Include="CategorySubBusiness.cs" />
+    <Compile Include="DocumentBusiness.cs" />
     <Compile Include="ManufacturerBusiness.cs" />
     <Compile Include="ProductBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

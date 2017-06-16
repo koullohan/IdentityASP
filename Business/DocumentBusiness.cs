@@ -1,5 +1,5 @@
-﻿using Entities.Document;
-using Entities.ViewModel;
+﻿using Entities.Resources;
+using Entities.VM;
 using IdentityASP.Models;
 using System;
 using System.Collections.Generic;
@@ -16,27 +16,27 @@ namespace Business
 
         private static bool result = false;
 
-        public static byte[] DownloadDocument(Document model)
+        public static byte[] DownloadDocument(DocumentViewModel viewmodel)
         {
-            return System.IO.File.ReadAllBytes(model.Path);
+            return System.IO.File.ReadAllBytes(viewmodel.DocumentPath);
 
         }
 
 
-        public static List<Document> GetDocuments(Document model)
+        public static List<DocumentViewModel> GetDocuments(DocumentViewModel viewmodel)
         {
 
-            var documents = new List<Document>();
+            var documents = new List<DocumentViewModel>();
 
             try
             {
 
-                var files = Directory.EnumerateFiles(model.Path).ToList();
+                var files = Directory.EnumerateFiles(viewmodel.DocumentPath).ToList();
 
                 foreach (var file in files)
                 {
-                    var document = new Document();
-                    document.Name = Path.GetFileName(file);
+                    var document = new DocumentViewModel();
+                    document.DocumentName = Path.GetFileName(file);
                     documents.Add(document);
                 }
             }
@@ -49,9 +49,9 @@ namespace Business
         }
 
 
-        public static string GetFileName(Document model)
+        public static string GetFileName(DocumentViewModel viewmodel)
         {
-            return Path.GetFileName(model.Path);
+            return Path.GetFileName(viewmodel.DocumentPath);
         }
 
 
@@ -61,7 +61,7 @@ namespace Business
         }
 
 
-        public static bool UploadDocument(Document viewmodel)
+        public static bool UploadDocument(DocumentViewModel viewmodel)
         {
 
             if (!Directory.Exists(viewmodel.DocumentPath))
@@ -77,7 +77,7 @@ namespace Business
 
                     if (viewmodel.DocumentPostedFile.ContentLength != 0)
                     {
-                        viewmodel.DocumentCombinePath = Path.Combine(viewmodel.DocumentPath + "\\" + viewmodel.DocumentPostedFile.FileName);
+                        viewmodel.DocumentCombinePath = Path.Combine(viewmodel.DocumentPath + Document.DocumentDoubleBackslash + viewmodel.DocumentPostedFile.FileName);
                         viewmodel.DocumentPostedFile.SaveAs(viewmodel.DocumentCombinePath);
                     }
 

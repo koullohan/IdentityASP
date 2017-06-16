@@ -1,5 +1,4 @@
 ﻿@model Entities.Product
-
 @using (Ajax.BeginForm("CreateProduct", "Product", null, new AjaxOptions() { OnSuccess = "updateProductTable" }, null))
 {
 
@@ -16,9 +15,9 @@
                 </div>
                 <div class="form-group">
                     <label for="categoryIdLabel">Category</label>
-                    @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.Categories,"Value","Text"), "Select Category", new { @class = "form-control", id = "categoryId", name = "category-id", required = "required", autocomplete = "off" })
+                    @Html.DropDownListFor(m => m.CategoryId, new SelectList(ViewBag.Categories, "Value", "Text"), "Select Category", new { @class = "form-control", id = "categoryId", name = "category-id", required = "required", autocomplete = "off" })
                 </div>
-               <div class="form-group">
+                <div class="form-group">
                     <label for="categoryDescriptionLabel" class="hidden">Category Description</label>
                     @Html.Hidden("CategoryDescription", null, new { id = "categoryDescription", name = "category-description" })
                 </div>

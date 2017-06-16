@@ -1,4 +1,5 @@
 ﻿using Business;
+using Entities.VM;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.IO;
