@@ -21,7 +21,7 @@ namespace IdentityASP.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var x = User.Identity.GetUserId();
+            
             DocumentViewModel viewmodel = new DocumentViewModel();
             viewmodel.DocumentPath = Server.MapPath(viewmodel.DocumentLocation + User.Identity.GetUserId());
             viewmodel.DocumentList = DocumentBusiness.GetDocuments(viewmodel);

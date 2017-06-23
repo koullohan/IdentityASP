@@ -13,9 +13,10 @@ namespace Business
 {
     public class DocumentBusiness
     {
-        private static ApplicationDbContext identityASPdb = new ApplicationDbContext();
 
+        private static ApplicationDbContext identityASPdb = new ApplicationDbContext();
         private static bool result = false;
+
 
         public static byte[] DownloadDocument(DocumentViewModel viewmodel)
         {
@@ -33,7 +34,7 @@ namespace Business
             {
                 if (Directory.Exists(viewmodel.DocumentPath))
                 {                   
-                    documents = Directory.GetFiles(viewmodel.DocumentPath).Select(store => new DocumentViewModel { DocumentName = Path.GetFileName(store) }).ToList();
+                    documents = Directory.GetFiles(viewmodel.DocumentPath).Select(path => new DocumentViewModel { DocumentName = Path.GetFileName(path) }).ToList();
                 }                        
             }
             catch (Exception e)
