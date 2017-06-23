@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Entities.VM;
 using IdentityASP.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Business
         private static bool result = false;
 
 
-        public static bool AddCategorySub(CategorySub model, out int categorysubId)
+        public static bool AddCategorySub(CategorySubViewModel model, out int categorysubId)
         {
             var categorysub = new CategorySub();
             if (model.Id == 0)
@@ -91,7 +92,7 @@ namespace Business
         }
 
 
-        public static bool EditCategorySub(CategorySub model)
+        public static bool EditCategorySub(CategorySubViewModel model)
         {
             if (model.Id > 0)
             {

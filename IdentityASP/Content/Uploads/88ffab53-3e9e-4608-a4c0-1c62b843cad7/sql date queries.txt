@@ -1,0 +1,32 @@
+DATE DIFFERENCE BETWEEN TWO DATES
+DATEDIFF ( datepart , startdate , enddate )
+SELECT DATEDIFF(DAY, '1/1/2011', '3/1/2011')
+
+DAYS FROM NOW
+WHERE t.date >= ( CURDATE() - INTERVAL 3 DAY )
+
+ONE WEEK FROM NOW
+SELECT id FROM tbl
+WHERE date >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY
+AND date < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY
+
+
+MONTH(S) FROM NOW
+where datetime_column >= Dateadd(Month, Datediff(Month, 0, DATEADD(m, -6, current_timestamp)), 0)
+
+YEAR(s) FROM NOW
+select ... from... where date > DATEADD(year,-1,GETDATE())
+
+
+MONTHS FROM SELECTED DATE
+
+
+YEAR FROM SELECTED DATE
+
+
+
+
+
+
+
+

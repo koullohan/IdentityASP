@@ -312,7 +312,7 @@
     <Content Include="Views\Product\AddProduct.cshtml" />
     <Content Include="Views\Product\Product.cshtml" />
     <Content Include="Views\Document\_UploadDocument.cshtml" />
-    <Content Include="Views\Product\_ProductWindow.cshtml" />
+    <Content Include="Views\Document\_Document.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

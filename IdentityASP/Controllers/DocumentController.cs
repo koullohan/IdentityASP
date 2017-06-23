@@ -29,11 +29,19 @@ namespace IdentityASP.Controllers
 
         }
 
-     
-        [HttpPost]
+
+        public ActionResult LoadDocuments()
+        {
+            DocumentViewModel viewmodel = new DocumentViewModel();
+            viewmodel.DocumentPath = Server.MapPath(viewmodel.DocumentLocation + User.Identity.GetUserId());
+            viewmodel.DocumentList = DocumentBusiness.GetDocuments(viewmodel);
+            return PartialView("_Document", viewmodel);
+
+        }
+       
         public JsonResult UploadDocument()
         {
-           
+            string message = "";
             if (ModelState.IsValid)
             {
     
@@ -41,18 +49,19 @@ namespace IdentityASP.Controllers
                 viewmodel.DocumentPath = Server.MapPath(viewmodel.DocumentLocation + User.Identity.GetUserId());
                 viewmodel.DocumentFiles = Request.Files;
                 result = DocumentBusiness.UploadDocument(viewmodel);
-
+                
                 if (result)
                 {
-                    ViewBag.Message = "Upload Success";
+                    message = "File uploaded successfully";
                 }
                 else
                 {
-                    ViewBag.Message = "Upload Failed";
+                    message = "File has not uploaded successfully";
                 }
             }
+            return Json(new { success = result, message = message }, JsonRequestBehavior.AllowGet);
+            //return Json(new { success = result,message = message  ,Url = Url.Action("_Document", LoadDocuments())}, JsonRequestBehavior.AllowGet);
 
-            return Json(new { success = result, message= ViewBag.Message });
         }
 
         

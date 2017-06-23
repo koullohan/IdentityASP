@@ -1,0 +1,24 @@
+MONTHS FROM NOW (1-12)
+	DateTime testMonth = DateTime.Now.AddMonths(-12);
+	var queryResult = (from product in asp.Product
+	where (product.CreatedDate > testMonth && product.isDelete != true)
+	select product).ToList();
+
+
+DAYS FROM NOW
+	DateTime testMonth = DateTime.Now.AddDays(-2);
+
+
+12 HOURS FROM NOW
+	DateTime testMonth = DateTime.Now.AddHours(-12);
+
+
+24 HOURS FROM NOW
+	DateTime testMonth = DateTime.Now.AddHours(-24);
+
+
+48 HOURS FROM NOW
+	DateTime testMonth = DateTime.Now.AddHours(-48);
+
+
+

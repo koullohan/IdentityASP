@@ -77,6 +77,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Sales.cs" />
+    <Compile Include="VM\CategorySubViewModel.cs" />
+    <Compile Include="VM\CategoryViewModel.cs" />
     <Compile Include="VM\DocumentViewModel.cs" />
     <Compile Include="VM\MailViewModel.cs" />
     <Compile Include="VM\ProductViewModel.cs" />

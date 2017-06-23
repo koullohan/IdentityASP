@@ -1,0 +1,6 @@
+var inboundTranslationList = Request.Form["inboundTranslationList[]"].Split(',');
+var list = inboundTranslationList.Zip(senderCodeList, (a, b) => new { A = a, B = b });
+foreach(var item in list)
+
+telerik checkbox
+.Title("<input id='chkParent' name='chkParent' type='checkbox' />")

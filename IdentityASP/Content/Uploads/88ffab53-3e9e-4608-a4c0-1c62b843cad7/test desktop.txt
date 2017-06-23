@@ -1,0 +1,16 @@
+      function onDataBound() {
+         modifyGridPager("#UserTypeGrid");
+      }
+
+      function modifyGridPager(gridId) {
+         var grid = $(gridId).data('tGrid');
+         var gridPager = gridId + " .t-grid-pager";
+
+         var pageIndexStyle = "<span style=''>@Appterra.UI.Resources.Shared.General.PageSize</span>";
+         $(gridId + " .t-pager .t-page-size").prepend(pageIndexStyle);
+
+         if (grid.total == 0)
+            $(gridPager).hide();
+         else
+            $(gridPager).show();
+      }

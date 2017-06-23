@@ -1,6 +1,6 @@
 ﻿using Business;
 using Entities;
-using IdentityASP.Models.ViewModel;
+using Entities.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,14 +78,14 @@ namespace IdentityASP.Controllers
         public ActionResult GetCategoriesSub(int categoryId)
         {
 
-            var model = new CategorySub();
+            var model = new CategorySubViewModel();
             model.CategorySubList = CategorySubBusiness.GetCategoriesSubByCategoryId(categoryId);
 
             return Json(new { data = model.CategorySubList, success = "true", JsonRequestBehavior.AllowGet });
         }
 
         [HttpPost]
-        public ActionResult SaveCategorySub(CategorySub model)
+        public ActionResult SaveCategorySub(CategorySubViewModel model)
         {
 
             if (ModelState.IsValid)

@@ -22,11 +22,11 @@
     }
    
     <!-- #begin productmodalbutton-->
-    <div id="AddProduct"><button type="button" data-toggle="modal" href="@Url.Action("ProductWindow", "Product")" data-target="#AddProductModal" class="btn-add btn btn-info btn-default">Add</button></div>
+    <div id="AddProduct"><button type="button" data-toggle="modal" href="@Url.Action("ShowProductWindow", "Product")" data-target="#AddProductModal" class="btn-add btn btn-info btn-default">Add</button></div>
     <!--#end productmodalbutton -->
     
     <!--#begin product table-->
-    <div id="searchResults">@Html.Partial("~/Views/Product/_ProductWindow.cshtml")</div>
+    <div id="searchResults">@Html.Partial("~/Views/Product/Product.cshtml")</div>
     <!--#end product table--> 
 
     <!--#begin productmodal-->

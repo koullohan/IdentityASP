@@ -1,6 +1,7 @@
 ﻿using Business;
 using Entities;
 using IdentityASP.Models;
+using IdentityASP.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,26 @@ namespace IdentityASP.Controllers
         public ActionResult Index()
         {
 
-            //Manufacturer viewmodel = new Manufacturer();
-            //viewmodel.ManufacturerList = ManufacturerBusiness.GetManufacturers();
-            return View();
+            ManufacturerViewModel viewmodel = new ManufacturerViewModel();
+            viewmodel.ManufacturerList = new List<ManufacturerViewModel>();
+            var manufacturers = ManufacturerBusiness.GetManufacturers();
+
+            foreach (var item in manufacturers)
+            {
+                var manufacturer = new ManufacturerViewModel();
+                manufacturer.Id = item.Id;
+                manufacturer.Name = item.Name;
+                manufacturer.Location = item.Location;
+                manufacturer.Manager = item.Manager;
+                manufacturer.Telephone = item.Telephone;
+                manufacturer.Email = item.Email;
+                manufacturer.Fax = item.Fax;
+               
+                viewmodel.ManufacturerList.Add(manufacturer);
+
+            }
+
+            return View(viewmodel);
         }
 
 

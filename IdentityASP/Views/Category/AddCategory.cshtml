@@ -1,4 +1,4 @@
-﻿@model Entities.Category
+﻿@model IdentityASP.Models.ViewModel.CategoryViewModel
 <!-- #begin add category modal -->
 @using (Ajax.BeginForm("SaveCategory", "Category", null, new AjaxOptions() { OnSuccess = "updateTableCategory" }, null))
 {

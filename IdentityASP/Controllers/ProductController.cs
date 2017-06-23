@@ -22,7 +22,7 @@ namespace IdentityASP.Controllers
         public ActionResult Index()
         {
 
-            var viewmodel = new ProductViewModel();                     
+            ProductViewModel viewmodel = new ProductViewModel();                     
             viewmodel.ProductList = new List<ProductViewModel>();
 
             var productList = ProductBusiness.GetProducts();
@@ -54,7 +54,7 @@ namespace IdentityASP.Controllers
             ViewBag.Categories = CategoryBusiness.GetCategoriesSelectList();
             ViewBag.Manufacturers = ManufacturerBusiness.GetManufacturersSelectList();
 
-            return PartialView("_ProductWindow", new Product());
+            return PartialView("AddProduct", new Product());
         }
 
         public PartialViewResult GetProduct(int id)

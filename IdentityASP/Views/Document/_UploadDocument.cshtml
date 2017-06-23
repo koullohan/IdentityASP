@@ -36,7 +36,7 @@
                     fileData.append(files[i].name, files[i]);
 
                 }
-                alert('hi');
+
                 $.ajax({
                     url: '/Document/UploadDocument',
                     type: "POST",
@@ -45,6 +45,10 @@
                     data: fileData,
                     success: function (e) {
                         alert(e.message);
+                   
+                        $("#resultView").load("/Document/LoadDocuments");
+                        
+
                     },
                     error: function (err) {
                         alert(err.statusText);
@@ -56,5 +60,6 @@
             }
     });
     });
+
 
 </script>
