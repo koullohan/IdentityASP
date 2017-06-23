@@ -46,6 +46,7 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web" />
@@ -65,6 +66,7 @@
     <Compile Include="CategoryBusiness.cs" />
     <Compile Include="CategorySubBusiness.cs" />
     <Compile Include="DocumentBusiness.cs" />
+    <Compile Include="MailBusiness.cs" />
     <Compile Include="ManufacturerBusiness.cs" />
     <Compile Include="ProductBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,8 +1,10 @@
-﻿using Entities.ViewModel;
+﻿using Entities.VM;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
+using System.Net.Configuration;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,24 +13,8 @@ namespace Business
 {
     public class MailBusiness
     {
+
         private static bool result = false;
-
-        //public static async Task<int> SendMailAsync(MailViewModel viewmodel)
-        //{
-        //    HttpClient client = new HttpClient();
-        //    Task<string> getStringTask = client.GetStringAsync("http://msdn.microsoft.com");              
-        //    string urlContents = await getStringTask;
-        //    return urlContents.Length;
-        //}
-
-        //public static async Task<string> SendAnotherMailAsync()
-        //{
-        //    HttpClient client = new HttpClient();
-        //    Task<string> getStringTask = client.GetStringAsync("http://msdn.microsoft.com");
-        //    string urlContents = await getStringTask;
-        //    return urlContents.FirstOrDefault().ToString();
-        //}
-
 
 
         public static bool SendMail(MailViewModel viewmodel)
@@ -36,32 +22,27 @@ namespace Business
 
             try
             {
-                // You should use using block so .NET can clean up resources
+                SmtpSection section = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+                var message = new MailMessage();
+                message.From = new MailAddress(section.From, viewmodel.MailName);
+                message.To.Add(new MailAddress(section.Network.UserName));
+                message.Subject = viewmodel.MailSubject;
+                message.Body = viewmodel.MailBody;
+
                 using (var client = new SmtpClient())
                 {
-
-                    MailMessage msg = new MailMessage();
-                    //msg.From = new MailAddress(viewmodel.MailFrom);
-                    foreach (var item in viewmodel.MailTo)
-                    {
-                        msg.To.Add(item);
-                    }
-                    msg.Body = viewmodel.MailBody;
-                    msg.Subject = viewmodel.MailSubject;
-
-                    client.Host = "smtp.gmail.com";
-                    client.Port = 25;
-                    client.Credentials = new NetworkCredential("koullohan@gmail.com", "#LocalMaster");
-                    client.Send(msg);
-                    //client.Dispose();
-
-                    result = true;
+                    client.EnableSsl = section.Network.EnableSsl;
+                    client.UseDefaultCredentials = section.Network.DefaultCredentials;
+                    client.Credentials = new NetworkCredential(section.Network.UserName, section.Network.Password);
+                    client.Host = section.Network.Host;
+                    client.Port = section.Network.Port;
+                    client.Send(message);
+                    client.Dispose();
                 }
             }
             catch (Exception ex)
             {
-                throw ex.InnerException;
-
+                throw ex;
             }
 
             return result;

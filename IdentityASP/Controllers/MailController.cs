@@ -1,4 +1,5 @@
-﻿using IdentityASP.Models.ViewModel;
+﻿using Business;
+using Entities.VM;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,6 +14,10 @@ namespace IdentityASP.Controllers
 {
     public class MailController : Controller
     {
+
+        private static bool result = false;
+
+
         // GET: Mail
         public ActionResult Index()
         {
@@ -22,30 +27,19 @@ namespace IdentityASP.Controllers
         public ActionResult SendMail(MailViewModel mail) 
         {
 
-            try
+            if (ModelState.IsValid)
             {
-                SmtpSection section = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
-                var message = new MailMessage();
-                message.From = new MailAddress(section.From, mail.MailName);
-                message.To.Add(new MailAddress(section.Network.UserName));            
-                message.Subject = mail.MailSubject;
-                message.Body = mail.MailBody;
-
-                using (var client = new SmtpClient())
-                {                 
-                    client.EnableSsl = section.Network.EnableSsl;
-                    client.UseDefaultCredentials = section.Network.DefaultCredentials;
-                    client.Credentials = new NetworkCredential(section.Network.UserName, section.Network.Password);
-                    client.Host = section.Network.Host;
-                    client.Port = section.Network.Port;                    
-                    client.Send(message);
-                    client.Dispose();
+                result = MailBusiness.SendMail(mail);
+                if (result)
+                {
+                    ViewBag.Message = "File sent successfully";
+                }
+                else
+                {
+                    ViewBag.Message = "File not sent successfully";
                 }
             }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+
             return PartialView("_Mail");
 
         }

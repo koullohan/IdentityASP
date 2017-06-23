@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Sales.cs" />
     <Compile Include="VM\DocumentViewModel.cs" />
+    <Compile Include="VM\MailViewModel.cs" />
     <Compile Include="VM\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup />
