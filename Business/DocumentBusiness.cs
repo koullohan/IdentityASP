@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,15 +31,10 @@ namespace Business
 
             try
             {
-
-                var files = Directory.EnumerateFiles(viewmodel.DocumentPath).ToList();
-
-                foreach (var file in files)
-                {
-                    var document = new DocumentViewModel();
-                    document.DocumentName = Path.GetFileName(file);
-                    documents.Add(document);
-                }
+                if (Directory.Exists(viewmodel.DocumentPath))
+                {                   
+                    documents = Directory.GetFiles(viewmodel.DocumentPath).Select(store => new DocumentViewModel { DocumentName = Path.GetFileName(store) }).ToList();
+                }                        
             }
             catch (Exception e)
             {
@@ -77,7 +73,7 @@ namespace Business
 
                     if (viewmodel.DocumentPostedFile.ContentLength != 0)
                     {
-                        viewmodel.DocumentCombinePath = Path.Combine(viewmodel.DocumentPath + Document.DocumentDoubleBackslash + viewmodel.DocumentPostedFile.FileName);
+                        viewmodel.DocumentCombinePath = Path.Combine(viewmodel.DocumentPath + Document.Backslash + viewmodel.DocumentPostedFile.FileName);
                         viewmodel.DocumentPostedFile.SaveAs(viewmodel.DocumentCombinePath);
                     }
 

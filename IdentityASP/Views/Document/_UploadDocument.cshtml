@@ -1,17 +1,20 @@
-﻿@model IdentityASP.Models.ViewModel.DocumentViewModel
-<!--begin upload document form-->
+﻿<!--begin upload document form-->
 <div>
     <form id="DocumentUpload">
         <span>Select File:</span>
-        <input type="file" id="FileUpload1" multiple />
+        <input type="file" id="FileUpload1" />
         <hr />
         <input type="submit" value="Upload" />
         <br />
     </form>
 </div>
+
+
+<!--end upload document form-->
+@*@using (Html.BeginForm("UploadDocument", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+
+
 <script>
-
-
     $(document).ready(function () {
 
         $("#DocumentUpload").submit(function (e) {
@@ -21,7 +24,9 @@
             if (window.FormData !== undefined) { // Checking whether FormData is available in browser
 
                 var fileUpload = $("#FileUpload1").get(0);
-                var files = input[type = file].files
+
+                //var files = input[type = file].files;
+
                 var files = fileUpload.files;
 
                 var fileData = new FormData();// Create FormData object
@@ -31,34 +36,25 @@
                     fileData.append(files[i].name, files[i]);
 
                 }
-
+                alert('hi');
                 $.ajax({
-                        url: '/Document/UploadDocument',
-                        type: "POST",
-                        contentType: false, // Not to set any content header
-                        processData: false, // Not to process data
-                        data: fileData,
-                        success: function (e) {
-                            alert(e.message);
-                        },
-                        error: function (err) {
-                            alert(err.statusText);
-                        }
+                    url: '/Document/UploadDocument',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function (e) {
+                        alert(e.message);
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
                 });
-
             }
-
             else {
-
                 alert("FormData is not supported.");
-
             }
     });
     });
 
 </script>
-<!--end upload document form-->
-@*@using (Html.BeginForm("UploadDocument", "Document", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
-
-
-

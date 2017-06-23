@@ -23,7 +23,7 @@ namespace IdentityASP.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("HotelConnection", throwIfV1Schema: false)
+            : base("CodeSinaiConnection", throwIfV1Schema: false)
         {
         }
 
@@ -37,5 +37,6 @@ namespace IdentityASP.Models
         public DbSet<CategorySub> CategorySub{ get; set; }
         public DbSet<Manufacturer> Manufacturer { get; set; }
         public DbSet<Document> Document { get; set; }
+
     }
 }

@@ -63,27 +63,27 @@ namespace IdentityASP.Resources {
         /// <summary>
         ///   Looks up a localized string similar to \\.
         /// </summary>
-        internal static string DocumentDoubleBackslash {
+        internal static string DoubleBackslash {
             get {
-                return ResourceManager.GetString("DocumentDoubleBackslash", resourceCulture);
+                return ResourceManager.GetString("DoubleBackslash", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ~/Uploads/.
         /// </summary>
-        internal static string DocumentLocation {
+        internal static string Location {
             get {
-                return ResourceManager.GetString("DocumentLocation", resourceCulture);
+                return ResourceManager.GetString("Location", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to /.
         /// </summary>
-        internal static string DocumentLocationSlash {
+        internal static string Slash {
             get {
-                return ResourceManager.GetString("DocumentLocationSlash", resourceCulture);
+                return ResourceManager.GetString("Slash", resourceCulture);
             }
         }
     }

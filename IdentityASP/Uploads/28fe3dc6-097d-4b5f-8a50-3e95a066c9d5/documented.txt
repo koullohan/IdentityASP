@@ -1,3 +1,0 @@
-enable migration
-
-if accidentally deleted , add the model again with the same name 

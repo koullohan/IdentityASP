@@ -8,7 +8,7 @@ namespace IdentityASP.Models.ViewModel
     public class DocumentViewModel
     {
 
-        private string documentLocation = IdentityASP.Resources.Document.DocumentLocation;
+        private string documentLocation = IdentityASP.Resources.Document.Location;
 
         public int DocumentId { get; set; }
         public string DocumentName { get; set; }

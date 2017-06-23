@@ -9,10 +9,16 @@ namespace Entities.VM
 {
     public class DocumentViewModel
     {
-        private string documentLocation = Resources.Document.DocumentLocation;
 
-        public int DocumentId { get; set; }
-        public string DocumentName { get; set; }
+        private string documentLocation = Resources.Document.Location;
+
+        public int DocumentId { get; set; }    
+       
+        public string DocumentCombinePath { get; set; }
+
+        public HttpFileCollectionBase DocumentFiles { get; set; }
+
+        public List<DocumentViewModel> DocumentList { get; set; }
 
         public string DocumentLocation
         {
@@ -26,14 +32,14 @@ namespace Entities.VM
             }
         }
 
+        public string DocumentName { get; set; }
+
         public string DocumentPath { get; set; }
-
-        public List<DocumentViewModel> DocumentList { get; set; }
-
-        public HttpFileCollectionBase DocumentFiles { get; set; }
 
         public HttpPostedFileBase DocumentPostedFile { get; set; }
 
-        public string DocumentCombinePath { get; set; }
+
+
     }
+
 }

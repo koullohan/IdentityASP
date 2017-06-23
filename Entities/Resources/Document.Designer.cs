@@ -63,27 +63,27 @@ namespace Entities.Resources {
         /// <summary>
         ///   Looks up a localized string similar to \\.
         /// </summary>
-        public static string DocumentDoubleBackslash {
+        public static string Backslash {
             get {
-                return ResourceManager.GetString("DocumentDoubleBackslash", resourceCulture);
+                return ResourceManager.GetString("Backslash", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ~/Uploads/.
+        ///   Looks up a localized string similar to ~/Content/Uploads/.
         /// </summary>
-        public static string DocumentLocation {
+        public static string Location {
             get {
-                return ResourceManager.GetString("DocumentLocation", resourceCulture);
+                return ResourceManager.GetString("Location", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to /.
         /// </summary>
-        public static string DocumentLocationSlash {
+        public static string Slash {
             get {
-                return ResourceManager.GetString("DocumentLocationSlash", resourceCulture);
+                return ResourceManager.GetString("Slash", resourceCulture);
             }
         }
     }

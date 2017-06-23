@@ -265,8 +265,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Uploads\24e86a69-6aa8-40cd-ba70-2750b7b0621b\imgres.jpg" />
-    <Content Include="Uploads\24e86a69-6aa8-40cd-ba70-2750b7b0621b\test22.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -318,6 +316,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Uploads\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Report\" />
   </ItemGroup>

@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DocumentDoubleBackslash" xml:space="preserve">
+  <data name="Backslash" xml:space="preserve">
     <value>\\</value>
   </data>
-  <data name="DocumentLocation" xml:space="preserve">
-    <value>~/Uploads/</value>
+  <data name="Location" xml:space="preserve">
+    <value>~/Content/Uploads/</value>
   </data>
-  <data name="DocumentLocationSlash" xml:space="preserve">
+  <data name="Slash" xml:space="preserve">
     <value>/</value>
   </data>
 </root>
